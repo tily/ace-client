@@ -28,7 +28,7 @@ module AceClient
     def set_http_proxy
       if @http_proxy
         uri = URI.parse(@http_proxy)
-        self.class.http_proxy(uri.scheme + '://' + uri.host, uri.port)
+        self.class.http_proxy(uri.host, uri.port)
       end
     end
 
