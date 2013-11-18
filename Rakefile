@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "ace-client"
   gem.homepage = "http://github.com/tily/ace-client"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Simple ACE(Amazon Compatible Environment) Client}
+  gem.description = %Q{Simple ACE(Amazon Compatible Environment) Client}
   gem.email = "tily05@gmail.com"
   gem.authors = ["tily"]
   # dependencies defined in Gemfile
