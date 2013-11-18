@@ -13,4 +13,17 @@ ace-client solves this problem, and provide simple interface to test ACE environ
 
 ## Usage
 
+### Good Old Query + Sig2 Client
+
+    require 'ace-client'
+
+    rdb = AceClient::Query2.new(
+      :endpoint => 'rds.ap-northeast-1.amazonaws.com',
+      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+    )
+    res = rdb.action('DescribeDBEngineVersions')
+    p res['DescribeDBEngineVersionsResponse']['DescribeDBEngineVersionsResult']['DBEngineVersions']['DBEngineVersion'].first
+    # => {"DBParameterGroupFamily"=>"mysql5.1", "Engine"=>"mysql", "DBEngineDescription"=>"MySQL Community Edition", "EngineVersion"=>"5.1.50", "DBEngineVersionDescription"=>"MySQL 5.1.50"}
+
 ## Copyright
