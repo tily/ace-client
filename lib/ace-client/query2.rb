@@ -33,7 +33,7 @@ module AceClient
       response = record_response do
         response = self.class.send(
            http_method,
-           endpoint_url,
+           endpoint_url + @path,
           :headers => {'Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8', 'User-Agent' => 'ace-client v0.0.1'},
           :query => @params
         )
