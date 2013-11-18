@@ -11,6 +11,11 @@ On the view of API testing, AWS SDK is too complicated and not easy to fall back
 Also, it validates parameters on the client side, and we can not test server-side validation.
 ace-client solves this problem, and provide simple interface to test ACE environments.
 
+## Features
+
+* no client-side validation
+* no dynamic API exception (both success and error response is returned as raw response)
+
 ## Usage
 
 ### Good Old Query + Sig2 Client
