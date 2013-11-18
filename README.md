@@ -92,14 +92,12 @@ you can specify your http method with :http_method option (Default is :post).
 
 ## TODO
 
-* http proxy support
 * user agent support
 * query + sig4 support
 * json + sig4 support
 * dry run mode (for genarating signatures)
 * logging
-* record response time for each requests
-* record last response
+  * human readable 'Sample Request & Response' format
 * handle redirects
 * socket/connection timeout configuration
 * rewrite query and header before/after genrating signature (maybe hook-like interface)
