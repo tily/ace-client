@@ -26,4 +26,16 @@ ace-client solves this problem, and provide simple interface to test ACE environ
     p res['DescribeDBEngineVersionsResponse']['DescribeDBEngineVersionsResult']['DBEngineVersions']['DBEngineVersion'].first
     # => {"DBParameterGroupFamily"=>"mysql5.1", "Engine"=>"mysql", "DBEngineDescription"=>"MySQL Community Edition", "EngineVersion"=>"5.1.50", "DBEngineVersionDescription"=>"MySQL 5.1.50"}
 
+
+    require 'ace-client'
+    
+    sqs = AceClient::Query2.new(
+      :endpoint => 'sqs.ap-northeast-1.amazonaws.com',
+      :version => '2012-11-05',
+      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+    )
+    p sqs.action('CreateQueue', 'QueueName' => 'queue001')
+    # =>    #<HTTParty::Response:0x163e5308 parsed_response={"CreateQueueResponse"=>{"CreateQueueResult"=>{"QueueUrl"=>"https://sqs.ap-northeast-1.amazonaws.com/370162190418/queue001"}, "ResponseMetadata"=>{"RequestId"=>"66640219-a36d-54d8-8c56-491a1f19fa2c"}}}, @response=#<Net::HTTPOK 200 OK readbody=true>, @headers={"server"=>["Server"], "date"=>["Mon, 18 Nov 2013 06:56:52 GMT"], "content-type"=>["text/xml"], "content-length"=>["333"], "connection"=>["close"], "x-amzn-requestid"=>["66640219-a36d-54d8-8c56-491a1f19fa2c"]}>
+
 ## Copyright
