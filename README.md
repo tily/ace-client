@@ -46,4 +46,18 @@ ace-client solves this problem, and provide simple interface to test ACE environ
 
 (coming soon)
 
+## TODO
+
+* http proxy support
+* user agent support
+* query + sig4 support
+* json + sig4 support
+* dry run mode (for genarating signatures)
+* logging
+* record response time for each requests
+* record last response
+* handle redirects
+* socket/connection timeout configuration
+* rewrite query and header before/after genrating signature (maybe hook-like interface)
+
 ## Copyright
