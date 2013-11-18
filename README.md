@@ -66,6 +66,30 @@ Construct your client with :http_proxy option (Proxy user and password is not cu
     )
     p rdb.action('ListQueues')
 
+### GET/POST Support
+
+you can specify your http method with :http_method option (Default is :post).
+
+    sqs = AceClient::Query2.new(
+      :http_method => :get,
+      :endpoint => 'sqs.ap-northeast-1.amazonaws.com',
+      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
+      :http_proxy => 'http://example.com:8080'
+    )
+    p sqs.action('ListQueues')
+
+### Getting Last Response Info
+
+    sqs = AceClient::Query2.new(
+      :endpoint => 'sqs.ap-northeast-1.amazonaws.com',
+      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+    )
+    p sqs.action('ListQueues')
+    p sqs.last_response      # currently HTTParty::Response object
+    p sqs.last_response_time # returned in seconds (Float object)
+
 ## TODO
 
 * http proxy support
