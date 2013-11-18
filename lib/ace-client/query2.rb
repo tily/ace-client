@@ -52,7 +52,6 @@ module AceClient
     end
 
     def string_to_sign
-      p [@http_method.to_s.upcase, @endpoint, @path, canonical_query_string].join("\n")
       [@http_method.to_s.upcase, @endpoint, @path, canonical_query_string].join("\n")
     end
 
