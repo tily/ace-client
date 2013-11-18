@@ -49,6 +49,18 @@ SQS:
 
 (coming soon)
 
+### Setting HTTP Proxy
+
+Construct your client with :http_proxy option (Proxy user and password is not currently supported.)
+
+    sqs = AceClient::Query2.new(
+      :endpoint => 'sqs.ap-northeast-1.amazonaws.com',
+      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
+      :http_proxy => 'http://example.com:8080'
+    )
+    p rdb.action('ListQueues')
+
 ## TODO
 
 * http proxy support
