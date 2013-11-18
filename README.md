@@ -102,5 +102,6 @@ you can specify your http method with :http_method option (Default is :post).
 * handle redirects
 * socket/connection timeout configuration
 * rewrite query and header before/after genrating signature (maybe hook-like interface)
+* environment variable suppoort (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, HTTP_PROXY)
 
 ## Copyright
