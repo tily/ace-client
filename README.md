@@ -98,6 +98,7 @@ you can specify your http method with :http_method option (Default is :post).
 * dry run mode (for genarating signatures)
 * logging
   * human readable 'Sample Request & Response' format
+    * masking access_key_id and signature
 * handle redirects
 * socket/connection timeout configuration
 * rewrite query and header before/after genrating signature (maybe hook-like interface)
