@@ -15,6 +15,8 @@ ace-client solves this problem, and provide simple interface to test ACE environ
 
 ### Good Old Query + Sig2 Client
 
+RDS:
+
     require 'ace-client'
 
     rds = AceClient::Query2.new(
@@ -26,6 +28,7 @@ ace-client solves this problem, and provide simple interface to test ACE environ
     p res['DescribeDBEngineVersionsResponse']['DescribeDBEngineVersionsResult']['DBEngineVersions']['DBEngineVersion'].first
     # => {"DBParameterGroupFamily"=>"mysql5.1", "Engine"=>"mysql", "DBEngineDescription"=>"MySQL Community Edition", "EngineVersion"=>"5.1.50", "DBEngineVersionDescription"=>"MySQL 5.1.50"}
 
+SQS:
 
     require 'ace-client'
     
