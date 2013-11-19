@@ -1,10 +1,12 @@
 require 'openssl'
 require 'cgi'
+require 'nokogiri'
 
 module AceClient
   class Query2 < Base
     attr_accessor :http_method
     attr_accessor :signature_method # TODO: HMAC-SHA256 or HMAC-SHA1
+    attr_accessor :sampler
 
     format :xml
     #debug_output $stderr
@@ -12,6 +14,7 @@ module AceClient
     def initialize(options={})
       super(options)
       @signature_method = options[:signature_method] || 'HmacSHA256'
+      @sampler = options[:sampler]
     end
 
     def action(action, params={})
@@ -43,14 +46,49 @@ module AceClient
       }
       options[:headers]['User-Agent'] = @user_agent if @user_agent
 
+      if http_method == :get
+        http_method_class = Net::HTTP::Get
+      elsif http_method == :post
+        http_method_class = Net::HTTP::Post
+      end
+
+      request = HTTParty::Request.new(http_method_class, endpoint_url + @path, options)
       if dryrun
-        HTTParty::Request.new(http_method, endpoint_url + @path, options)
+        request
       else
-        response = record_response do
-          self.class.send(http_method, endpoint_url + @path, options)
-        end
+        sample_request(request) if @sampler
+        response = record_response { request.perform }
+        sample_response(response) if @sampler
         response
       end
+    end
+
+    def sample_request(request)
+      query = request.options[:query].dup
+      variable_keys = %w(Version SignatureVersion SignatureMethod Timestamp AWSAccessKeyId Signature)
+      variables = {}
+      variable_keys.each do |key|
+        variables[key] = query.delete(key)
+      end
+      action = query.delete('Action')
+      @sampler[:output].puts "# #{action}"
+      @sampler[:output].puts "## request"
+      @sampler[:output].puts "#{request.path.to_s}"
+      @sampler[:output].puts "    ?Action=#{action}"
+      query.each do |key, value|
+        @sampler[:output].puts "    &#{key}=#{CGI.escape(value)}"
+      end
+      variable_keys.each do |key|
+        if variables[key]
+          value = @sampler[:echo][key] || CGI.escape(variables[key])
+          @sampler[:output].puts "    &#{key}=#{value}"
+        end
+      end
+    end
+
+    def sample_response(response)
+      @sampler[:output].puts "## response"
+      @sampler[:output].puts Nokogiri::XML(response.body).to_xml(:indent => 4)
     end
 
     def endpoint_url
