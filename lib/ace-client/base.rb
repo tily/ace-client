@@ -12,6 +12,7 @@ module AceClient
     attr_accessor :http_method
     attr_accessor :use_ssl
     attr_accessor :last_response_time
+    attr_accessor :user_agent
 
     def initialize(options)
       @access_key_id = options[:access_key_id]
@@ -22,6 +23,7 @@ module AceClient
       @use_ssl = options[:use_ssl] || true
       @version = options[:version]
       @path = options[:path] || '/'
+      @user_agent = options[:user_agent]
       set_http_proxy
     end
 

@@ -37,11 +37,11 @@ module AceClient
 
       options = {
         :headers => {
-          'Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8',
-          'User-Agent' => 'ace-client v0.0.1'
+          'Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8'
         },
         :query => @params
       }
+      options[:headers]['User-Agent'] = @user_agent if @user_agent
 
       if dryrun
         HTTParty::Request.new(http_method, endpoint_url + @path, options)
