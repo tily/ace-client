@@ -16,6 +16,10 @@ ace-client solves this problem, and provide simple interface to test ACE environ
 * no client-side validation
 * no dynamic API exception (both success and error response is returned as raw response)
 
+## Installation
+
+    gem install ace-client
+
 ## Usage
 
 ### Good Old Query + Sig2 Client
