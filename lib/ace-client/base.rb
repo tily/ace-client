@@ -11,6 +11,7 @@ module AceClient
     attr_accessor :http_proxy
     attr_accessor :http_method
     attr_accessor :use_ssl
+    attr_accessor :last_response
     attr_accessor :last_response_time
     attr_accessor :user_agent
 
