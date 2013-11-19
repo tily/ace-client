@@ -90,12 +90,27 @@ you can specify your http method with :http_method option (Default is :post).
     p sqs.last_response      # currently HTTParty::Response object
     p sqs.last_response_time # returned in seconds (Float object)
 
+### Dry-Run Mode
+
+If you want to get request information rather than sending actual request, use `dryrun` instead of `action`.
+`dryrun` returns HTTParty::Request object that would have been performed if you have used `action`.
+On HTTParty::Request class, see HTTParty's document.
+
+    sqs = AceClient::Query2.new(
+      :http_method => :get,
+      :endpoint => 'sqs.ap-northeast-1.amazonaws.com',
+      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+    )
+    req = rdb.dryrun('CreateQueue', 'QueueName' => 'queue001')
+    puts req.uri.to_s
+    # => https://sqs.ap-northeast-1.amazonaws.com/?QueueName=queue001&Action=CreateQueue&SignatureVersion=2&SignatureMethod=HmacSHA256&AWSAccessKeyId=XXXXXXXXXXXXXXXXXXXX&Timestamp=2013-11-19T08%3A53%3A40.115Z&Version=2012-11-05&Signature=AeeH%2BrAYt8jlmAuKnC1Jp1c5QE9o2cZ2FhhNZorw200%3D
+
 ## TODO
 
 * user agent support
 * query + sig4 support
 * json + sig4 support
-* dry run mode (for genarating signatures)
 * logging
   * human readable 'Sample Request & Response' format
     * masking access_key_id and signature
