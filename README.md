@@ -117,6 +117,51 @@ Specify `:user_agent` option in your constructor.
       :user_agent => "ace-client v#{AceClient::VERSION}"
     )
 
+### Output Sample Request/Response Log
+
+Set :sampler option to output AWS-document-like logs.
+
+If you write code like this:
+
+    sqs = AceClient::Query2.new(
+      :endpoint => 'sqs.ap-northeast-1.amazonaws.com',
+      :version => '2012-11-05',
+      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
+      :sampler => {
+        :output => STDOUT,
+        :echo => {
+          'AWSAccessKeyId' => '<AWS Access Key Id>',
+          'Signature' => '<Signature>'
+        }
+      }
+    )
+    sqs.action('CreateQueue', 'QueueName' => 'queue001')
+
+Then output would be:
+
+    # CreateQueue
+    ## request
+    https://sqs.ap-northeast-1.amazonaws.com/
+        ?Action=CreateQueue
+        &QueueName=queue001
+        &Version=2012-11-05
+        &SignatureVersion=2
+        &SignatureMethod=HmacSHA256
+        &Timestamp=2013-11-19T10%3A51%3A46.110Z
+        &AWSAccessKeyId=<AWS Access Key Id>
+        &Signature=<Signature>
+    ## response
+    <?xml version="1.0"?>
+    <CreateQueueResponse xmlns="http://queue.amazonaws.com/doc/2012-11-05/">
+        <CreateQueueResult>
+            <QueueUrl>https://sqs.ap-northeast-1.amazonaws.com/370162190418/queue001</QueueUrl>
+        </CreateQueueResult>
+        <ResponseMetadata>
+            <RequestId>1406b1f3-c3e5-51ac-a291-faf686e77b1e</RequestId>
+        </ResponseMetadata>
+    </CreateQueueResponse>
+
 ## TODO
 
 * query + sig4 support
