@@ -19,7 +19,12 @@ module AceClient
       execute(params)
     end
 
-    def execute(params={})
+    def dryrun(action, params={})
+      params.update('Action' => action)
+      execute(params, true)
+    end
+
+    def execute(params={}, dryrun=false)
       @params = params
       @params.update(
         'SignatureVersion' => '2',
@@ -30,15 +35,22 @@ module AceClient
       @params['Version'] = @version if @version
       @params['Signature'] = create_signature
 
-      response = record_response do
-        response = self.class.send(
-           http_method,
-           endpoint_url + @path,
-          :headers => {'Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8', 'User-Agent' => 'ace-client v0.0.1'},
-          :query => @params
-        )
+      options = {
+        :headers => {
+          'Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8',
+          'User-Agent' => 'ace-client v0.0.1'
+        },
+        :query => @params
+      }
+
+      if dryrun
+        HTTParty::Request.new(http_method, endpoint_url + @path, options)
+      else
+        response = record_response do
+          self.class.send(http_method, endpoint_url + @path, options)
+        end
+        response
       end
-      response
     end
 
     def endpoint_url
