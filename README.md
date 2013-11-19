@@ -110,12 +110,12 @@ On HTTParty::Request class, see HTTParty's document.
 
 Specify `:user_agent` option in your constructor.
 
-  AceClient::Query2.new(
-    :endpoint => 'sqs.ap-northeast-1.amazonaws.com',
-    :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
-    :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
-    :user_agent => "ace-client v#{AceClient::VERSION}"
-  )
+    AceClient::Query2.new(
+      :endpoint => 'sqs.ap-northeast-1.amazonaws.com',
+      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
+      :user_agent => "ace-client v#{AceClient::VERSION}"
+    )
 
 ## TODO
 
