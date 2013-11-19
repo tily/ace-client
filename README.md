@@ -102,9 +102,9 @@ On HTTParty::Request class, see HTTParty's document.
       :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
       :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
     )
-    req = rdb.dryrun('CreateQueue', 'QueueName' => 'queue001')
+    req = sqs.dryrun('CreateQueue', 'QueueName' => 'queue001')
     puts req.uri.to_s
-    # => https://sqs.ap-northeast-1.amazonaws.com/?QueueName=queue001&Action=CreateQueue&SignatureVersion=2&SignatureMethod=HmacSHA256&AWSAccessKeyId=XXXXXXXXXXXXXXXXXXXX&Timestamp=2013-11-19T08%3A53%3A40.115Z&Version=2012-11-05&Signature=AeeH%2BrAYt8jlmAuKnC1Jp1c5QE9o2cZ2FhhNZorw200%3D
+    # => https://sqs.ap-northeast-1.amazonaws.com/?QueueName=queue001&Action=CreateQueue&SignatureVersion=2&SignatureMethod=HmacSHA256&AWSAccessKeyId=XXXXXXXXXXXXXXXXXXXX&Timestamp=2013-11-19T08%3A53%3A40.115Z&Version=2012-11-05&Signature=YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
 
 ## TODO
 
