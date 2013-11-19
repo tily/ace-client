@@ -106,9 +106,19 @@ On HTTParty::Request class, see HTTParty's document.
     puts req.uri.to_s
     # => https://sqs.ap-northeast-1.amazonaws.com/?QueueName=queue001&Action=CreateQueue&SignatureVersion=2&SignatureMethod=HmacSHA256&AWSAccessKeyId=XXXXXXXXXXXXXXXXXXXX&Timestamp=2013-11-19T08%3A53%3A40.115Z&Version=2012-11-05&Signature=YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
 
+### Setting User-Agent in HTTP Request Header
+
+Specify `:user_agent` option in your constructor.
+
+  AceClient::Query2.new(
+    :endpoint => 'sqs.ap-northeast-1.amazonaws.com',
+    :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+    :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
+    :user_agent => "ace-client v#{AceClient::VERSION}"
+  )
+
 ## TODO
 
-* user agent support
 * query + sig4 support
 * json + sig4 support
 * logging
