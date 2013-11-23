@@ -17,10 +17,10 @@ module AceClient
     attr_accessor :user_agent
 
     def initialize(options)
-      @access_key_id = options[:access_key_id]
-      @secret_access_key = options[:secret_access_key]
-      @endpoint = options[:endpoint]
-      @http_proxy = options[:http_proxy]
+      @access_key_id = options[:access_key_id] || ENV['ACE_ACCESS_KEY_ID']
+      @secret_access_key = options[:secret_access_key] || ENV['ACE_SECRET_ACCESS_KEY']
+      @endpoint = options[:endpoint] || ENV['ACE_ENDPOINT']
+      @http_proxy = options[:http_proxy] || ENV['HTTP_PROXY']
       @http_method = options[:http_method] || :post
       @use_ssl = options[:use_ssl] || true
       @version = options[:version]
