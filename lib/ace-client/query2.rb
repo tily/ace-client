@@ -70,7 +70,7 @@ module AceClient
     end
 
     def sample_request(request)
-      query = request.options[:query].dup
+      query = (request.options[:query] || request.options[:body]).dup
       variable_keys = %w(Version SignatureVersion SignatureMethod Timestamp AWSAccessKeyId Signature)
       variables = {}
       variable_keys.each do |key|
