@@ -166,6 +166,26 @@ Then output would be:
         </ResponseMetadata>
     </CreateQueueResponse>
 
+### Rewrite Parameters before Creating Signature
+
+You can rewrite default parameters with `:before_signature` hook before creating signature.
+For example, you have to specify `AccessKeyId` instead of `AWSAccessKeyId` when using NIFTY Cloud API (http://cloud.nifty.com/api/rest/authenticate.htm).
+You can intercept params and rewrite `AWSAccessKeyId` to `AccessKeyId` using `:before_signature`.
+
+    require 'ace-client'
+    
+    compute = AceClient::Query2.new(
+      :endpoint => 'cp.cloud.nifty.com',
+      :path => '/api',
+      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
+      :before_signature => lambda {|params|
+        params['AccessKeyId'] = params.delete('AWSAccessKeyId')
+      }
+    )
+    p compute.action('DescribeRegions')
+    # => #<HTTParty::Response:0x7c0b0a0 parsed_response={"DescribeRegionsResponse"=>{"requestId"=>"df9de22f-cb3b-4cf9-9ee0-377e78742bf4", "regionInfo"=>{"item"=>[{"regionName"=>"east-1", "regionEndpoint"=>"east-1.cp.cloud.nifty.com", "messageSet"=>{"item"=>nil}, "isDefault"=>"true"}, {"regionName"=>"west-1", "regionEndpoint"=>"west-1.cp.cloud.nifty.com", "messageSet"=>{"item"=>nil}, "isDefault"=>"false"}]}}}, @response=#<Net::HTTPOK 200 OK readbody=true>, @headers={"date"=>["Sat, 23 Nov 2013 05:03:20 GMT"], "x-frame-options"=>["SAMEORIGIN"], "content-type"=>["text/xml;charset=utf-8"], "content-length"=>["558"], "vary"=>["Accept-Encoding"], "connection"=>["close"]}>
+
 ## TODO
 
 * query + sig4 support
