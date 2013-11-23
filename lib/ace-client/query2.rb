@@ -15,6 +15,8 @@ module AceClient
       super(options)
       @signature_method = options[:signature_method] || 'HmacSHA256'
       @sampler = options[:sampler]
+      @before_signature = options[:before_signature]
+      @before_request = options[:before_request]
     end
 
     def action(action, params={})
@@ -36,6 +38,9 @@ module AceClient
         'Timestamp' => Time.now.getutc.iso8601.sub(/Z/, sprintf(".%03dZ",(Time.now.getutc.usec/1000)))
       )
       @params['Version'] = @version if @version
+
+      @before_signature.call(@params) if @before_signature
+
       @params['Signature'] = create_signature
 
       options = self.class.default_options.dup
@@ -50,6 +55,8 @@ module AceClient
         options[:body] = @params
         http_method_class = Net::HTTP::Post
       end
+
+      @before_request.call(@params) if @before_request
 
       request = HTTParty::Request.new(http_method_class, endpoint_url + @path, options)
       if dryrun
