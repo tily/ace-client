@@ -39,17 +39,15 @@ module AceClient
       @params['Signature'] = create_signature
 
       options = self.class.default_options.dup
-      options.merge!(
-        :headers => {
-          'Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8'
-        },
-        :query => @params
-      )
+      options[:headers] = {}
+      options[:headers]['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
       options[:headers]['User-Agent'] = @user_agent if @user_agent
 
       if http_method == :get
+        options[:query] = @params
         http_method_class = Net::HTTP::Get
       elsif http_method == :post
+        options[:body] = @params
         http_method_class = Net::HTTP::Post
       end
 
