@@ -1,0 +1,32 @@
+$:.unshift(File.dirname(__FILE__) + '/../lib') unless $:.include?(File.dirname(__FILE__) + '/../lib')
+require 'ace-client'
+require 'thor'
+require 'nokogiri'
+
+BANNER = 'Usage: ace-q2 DescribeSomethings Key1=Value1 Key2=Value2 ...'
+
+def validate_env
+  %w(ACE_ACCESS_KEY_ID ACE_SECRET_ACCESS_KEY ACE_ENDPOINT).each do |x|
+    abort "Error: please set #{x} environment variable" if ENV[x].nil?
+  end
+end
+
+def main(args)
+  abort BANNER if args.size < 1
+  validate_env
+
+  action = args.shift
+  params = {}
+  args.each do |arg|
+    key, value = arg.split('=')
+    if value.nil?
+      abort 'Error: please specify params like Key=Value'
+    end
+    params[key] = value
+  end
+
+  response = AceClient::Query2.new.action(action, params)
+  puts Nokogiri::XML(response.body).to_xml(:indent => 4)
+end
+
+main(ARGV.dup)
