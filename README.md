@@ -186,6 +186,37 @@ You can intercept params and rewrite `AWSAccessKeyId` to `AccessKeyId` using `:b
     p compute.action('DescribeRegions')
     # => #<HTTParty::Response:0x7c0b0a0 parsed_response={"DescribeRegionsResponse"=>{"requestId"=>"df9de22f-cb3b-4cf9-9ee0-377e78742bf4", "regionInfo"=>{"item"=>[{"regionName"=>"east-1", "regionEndpoint"=>"east-1.cp.cloud.nifty.com", "messageSet"=>{"item"=>nil}, "isDefault"=>"true"}, {"regionName"=>"west-1", "regionEndpoint"=>"west-1.cp.cloud.nifty.com", "messageSet"=>{"item"=>nil}, "isDefault"=>"false"}]}}}, @response=#<Net::HTTPOK 200 OK readbody=true>, @headers={"date"=>["Sat, 23 Nov 2013 05:03:20 GMT"], "x-frame-options"=>["SAMEORIGIN"], "content-type"=>["text/xml;charset=utf-8"], "content-length"=>["558"], "vary"=>["Accept-Encoding"], "connection"=>["close"]}>
 
+### Command Line Support
+
+Above version 0.0.6, ace-client comes with command line program `ace-q2`.
+Environment variable ACE_ENDPOINT, ACE_ACCESS_KEY, ACE_SECRET_ACCESS_KEY should be defined for `ace-q2` to work.
+
+    $ export ACE_ACCESS_KEY_ID=XXXXXXXXXXXXXXXXXXXX
+    $ export ACE_SECRET_ACCESS_KEY=YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+    $ export ACE_ENDPOINT=rds.ap-northeast-1.amazonaws.com
+    $ ace-q2 DescribeDBSecurityGroups | head
+    <?xml version="1.0"?>
+    <DescribeDBSecurityGroupsResponse xmlns="http://rds.amazonaws.com/admin/2009-10-16/">
+      <DescribeDBSecurityGroupsResult>
+        <DBSecurityGroups>
+          <DBSecurityGroup>
+            <EC2SecurityGroups/>
+            <DBSecurityGroupDescription>default</DBSecurityGroupDescription>
+            <IPRanges>
+              <IPRange>
+                <CIDRIP>10.245.226.45/0</CIDRIP>
+    $ export ACE_ENDPOINT=sqs.ap-northeast-1.amazonaws.com
+    $ ace-q2 CreateQueue QueueName=tily001
+    <?xml version="1.0"?>
+    <CreateQueueResponse xmlns="http://queue.amazonaws.com/doc/2012-11-05/">
+        <CreateQueueResult>
+            <QueueUrl>https://sqs.ap-northeast-1.amazonaws.com/012345678910/tily001</QueueUrl>
+        </CreateQueueResult>
+        <ResponseMetadata>
+            <RequestId>305442f3-a62c-552a-8a51-09fea623f39e</RequestId>
+        </ResponseMetadata>
+    </CreateQueueResponse>
+
 ## TODO
 
 * query + sig4 support
