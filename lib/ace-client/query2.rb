@@ -97,11 +97,6 @@ module AceClient
       @sampler[:output].puts Nokogiri::XML(response.body).to_xml(:indent => 4)
     end
 
-    def endpoint_url
-      protocol = use_ssl ? 'https' : 'http' 
-      protocol + '://' + endpoint
-    end
-
     def create_signature
       digest = OpenSSL::Digest::Digest.new(@signature_method.downcase.gsub(/hmac/, ''))
       Base64.encode64(OpenSSL::HMAC.digest(digest, secret_access_key, string_to_sign)).strip

@@ -42,5 +42,10 @@ module AceClient
       @last_response_time = Time.now - start_time
       @last_response
     end
+
+    def endpoint_url
+      protocol = use_ssl ? 'https' : 'http' 
+      protocol + '://' + endpoint
+    end
   end
 end
