@@ -33,6 +33,15 @@ module AceClient
       else
         @use_ssl = true
       end
+      if options[:debug_output]
+        self.class.debug_output(options[:debug_output])
+      elsif %w(STDOUT STDERR).include?(ENV['ACE_DEBUG_OUTPUT'])
+        if ENV['ACE_DEBUG_OUTPUT'] == 'STDOUT'
+          self.class.debug_output($stdout)
+        else
+          self.class.debug_output($stderr)
+        end
+      end
       @version = options[:version]
       @path = options[:path] || '/'
       @user_agent = options[:user_agent]
