@@ -4,7 +4,7 @@ require 'uri'
 module AceClient
   class Base
     include HTTParty
-    ssl_version :SSLv3
+    ssl_version :TLSv1
 
     attr_accessor :access_key_id
     attr_accessor :secret_access_key
