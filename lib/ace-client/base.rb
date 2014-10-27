@@ -22,7 +22,17 @@ module AceClient
       @endpoint = options[:endpoint] || ENV['ACE_ENDPOINT']
       @http_proxy = options[:http_proxy] || ENV['HTTP_PROXY']
       @http_method = options[:http_method] || :post
-      @use_ssl = options[:use_ssl] || true
+      if options.key?(:use_ssl)
+        @use_ssl = options[:use_ssl]
+      elsif ENV['ACE_USE_SSL']
+        if ENV['ACE_USE_SSL'] == 'false'
+          @use_ssl = false
+        else
+          @use_ssl = true
+        end
+      else
+        @use_ssl = true
+      end
       @version = options[:version]
       @path = options[:path] || '/'
       @user_agent = options[:user_agent]
