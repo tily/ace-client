@@ -42,6 +42,7 @@ module AceClient
           self.class.debug_output($stderr)
         end
       end
+      self.class.format (options[:response_format] || ENV['ACE_RESPONSE_FORMAT'] || 'xml').to_sym
       @version = options[:version]
       @path = options[:path] || '/'
       @user_agent = options[:user_agent]
