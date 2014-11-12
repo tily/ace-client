@@ -47,3 +47,16 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
+
+desc 'vup'
+task :vup do
+        version = ENV['VERSION']
+        File.write('VERSION', "#{version}\n")
+        system "git add VERSION"
+        system "git commit -m 'version up to #{version}'"
+	system "git tag v#{version} -m v#{version}"
+        system "git push origin master"
+        system "git push --tags"
+        system "rake build"
+        system "gem push pkg/ace-client-#{version}.gem"
+end
