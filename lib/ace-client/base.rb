@@ -44,7 +44,7 @@ module AceClient
       end
       self.class.format (options[:response_format] || ENV['ACE_RESPONSE_FORMAT'] || 'xml').to_sym
       @version = options[:version]
-      @path = options[:path] || '/'
+      @path = options[:path] || ENV['ACE_PATH'] || '/'
       @user_agent = options[:user_agent]
       set_http_proxy
     end
