@@ -8,7 +8,6 @@ module AceClient
     attr_accessor :query
 
     format :xml
-    #debug_output $stdout
 
     def initialize(options)
       super(options)
