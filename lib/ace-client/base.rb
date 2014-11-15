@@ -22,6 +22,7 @@ module AceClient
       @endpoint = options[:endpoint] || ENV['ACE_ENDPOINT']
       @http_proxy = options[:http_proxy] || ENV['HTTP_PROXY']
       @http_method = options[:http_method] || :post
+      @access_key_id_key = options[:access_key_id_key] || ENV['ACE_ACCESS_KEY_ID_KEY'] || 'AWSAccessKeyId'
       if options.key?(:use_ssl)
         @use_ssl = options[:use_ssl]
       elsif ENV['ACE_USE_SSL']

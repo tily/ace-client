@@ -34,7 +34,7 @@ module AceClient
       @params.update(
         'SignatureVersion' => '2',
         'SignatureMethod' => @signature_method,
-        'AWSAccessKeyId' => @access_key_id,
+        @access_key_id_key => @access_key_id,
         'Timestamp' => Time.now.getutc.iso8601.sub(/Z/, sprintf(".%03dZ",(Time.now.getutc.usec/1000)))
       )
       @params['Version'] = @version if @version
@@ -71,7 +71,7 @@ module AceClient
 
     def sample_request(request)
       query = (request.options[:query] || request.options[:body]).dup
-      variable_keys = %w(Version SignatureVersion SignatureMethod Timestamp AWSAccessKeyId Signature)
+      variable_keys = %W(Version SignatureVersion SignatureMethod Timestamp #{access_key_id_key} Signature)
       variables = {}
       variable_keys.each do |key|
         variables[key] = query.delete(key)
