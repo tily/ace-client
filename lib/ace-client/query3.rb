@@ -16,6 +16,7 @@ module AceClient
       @signature_method = options[:signature_method] || 'HmacSHA256'
       @authorization_key = options[:authorization_key] || 'authorization'
       @date_key = options[:date_key] || 'x-date'
+      @nonce_key = options[:nonce_key] || 'x-amz-nonce'
       @authorization_prefix = options[:authorization_prefix] || 'AWS3-HTTPS'
       @nonce = options[:nonce]
 
@@ -49,6 +50,7 @@ module AceClient
       options[:headers]['X-Amzn-Authorization'] = "AWS3-HTTPS AWSAccessKeyId=#{access_key_id},Algorithm=#{signature_method},Signature=#{signature}"
       options[:headers]['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
       options[:headers]['User-Agent'] = @user_agent if @user_agent
+      options[:headers][@nonce_key] = @nonce if @nonce
 
       if http_method == :get
         options[:query] = @params
@@ -74,7 +76,7 @@ module AceClient
     end
 
     def string_to_sign
-      date
+      @nonce ? date + @nonce : date
     end
     
     def date
