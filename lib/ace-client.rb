@@ -1,5 +1,6 @@
 require 'ace-client/base'
 require 'ace-client/query2'
+require 'ace-client/query3'
 require 'ace-client/query4'
 
 module AceClient
