@@ -46,8 +46,7 @@ module AceClient
       options = self.class.default_options.dup
       options[:headers] = {}
       options[:headers]['Date'] = date
-      #options[:headers]['X-Nifty-Authorization'] = "NIFTY3-HTTPS NiftyAccessKeyId=#{access_key_id},Algorithm=#{signature_method},Signature=#{signature}"
-      options[:headers]['X-Amzn-Authorization'] = "AWS3-HTTPS AWSAccessKeyId=#{access_key_id},Algorithm=#{signature_method},Signature=#{signature}"
+      options[:headers][@authorization_key] = "#{@authorization_prefix} #{@access_key_id_key}=#{access_key_id},Algorithm=#{signature_method},Signature=#{signature}"
       options[:headers]['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
       options[:headers]['User-Agent'] = @user_agent if @user_agent
       options[:headers][@nonce_key] = @nonce if @nonce
