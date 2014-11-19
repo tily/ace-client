@@ -23,6 +23,9 @@ module AceClient
       @http_proxy = options[:http_proxy] || ENV['HTTP_PROXY']
       @http_method = options[:http_method] || :post
       @access_key_id_key = options[:access_key_id_key] || ENV['ACE_ACCESS_KEY_ID_KEY'] || 'AWSAccessKeyId'
+      if @timeout = options[:timeout] || ENV['ACE_TIMEOUT']
+        self.class.default_timeout @timeout
+      end
       if options.key?(:use_ssl)
         @use_ssl = options[:use_ssl]
       elsif ENV['ACE_USE_SSL']
