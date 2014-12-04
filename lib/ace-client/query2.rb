@@ -103,6 +103,7 @@ module AceClient
     end
 
     def string_to_sign
+      host = @host_with_port ? @endpoint : @endpoint.gsub(/\:\d+$/, '')
       [@http_method.to_s.upcase, @endpoint, @path, canonical_query_string].join("\n")
     end
 

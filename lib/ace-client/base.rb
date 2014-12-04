@@ -37,6 +37,17 @@ module AceClient
       else
         @use_ssl = true
       end
+      if options.key?(:host_with_port)
+        @host_with_port = options[:host_with_port]
+      elsif ENV['ACE_HOST_WITH_PORT']
+        if ENV['ACE_HOST_WITH_PORT'] == 'false'
+          @host_with_port = false
+        else
+          @host_with_port = true
+        end
+      else
+        @host_with_port = false
+      end
       if options[:debug_output]
         self.class.debug_output(options[:debug_output])
       elsif %w(STDOUT STDERR).include?(ENV['ACE_DEBUG_OUTPUT'])
