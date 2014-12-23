@@ -2,24 +2,23 @@ require 'openssl'
 require 'cgi'
 require 'nokogiri'
 require 'time'
+require 'builder'
 
 module AceClient
-  class Query3 < Base3
-    attr_accessor :http_method
-
+  class Xml3 < Base3
     format :xml
 
-    def action(action, params={})
-      params.update('Action' => action)
-      execute(params)
+    def action(method, path, params={})
+      record_response do
+        create_request(method, path, params).perform
+      end
     end
 
-    def dryrun(action, params={})
-      params.update('Action' => action)
-      execute(params, true)
+    def dryrun(method, path, params={})
+      create_request(method, path, params)
     end
 
-    def execute(params={}, dryrun=false)
+    def create_request(method, path, params={})
       @params = params
       @params['Version'] = @version if @version
 
@@ -35,22 +34,26 @@ module AceClient
       options[:headers]['User-Agent'] = @user_agent if @user_agent
       options[:headers][@nonce_key] = @nonce if @nonce
 
-      if http_method == :get
-        options[:query] = @params
-        http_method_class = Net::HTTP::Get
-      elsif http_method == :post
-        options[:body] = @params
-        http_method_class = Net::HTTP::Post
+      http_method_class = case method
+        when :get; Net::HTTP::Get
+        when :post; Net::HTTP::Post
+        when :delete; Net::HTTP::Delete
       end
+
+      if !params.empty?
+        builder = Builder::XmlMarkup.new
+        options[:body] = builder.tag!(params.keys.first) do |b|
+		params[params.keys.first].each do |k, v|
+			b.tag!(k, v)
+		end
+	end
+      end
+
+      @path = File.join('/', @version, path)
 
       @before_request.call(@params) if @before_request
 
-      request = HTTParty::Request.new(http_method_class, endpoint_url + @path, options)
-      if dryrun
-        request
-      else
-        record_response { request.perform }
-      end
+      HTTParty::Request.new(http_method_class, endpoint_url + @path, options)
     end
   end
 end
