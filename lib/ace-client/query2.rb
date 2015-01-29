@@ -47,6 +47,7 @@ module AceClient
       options[:headers] = {}
       options[:headers]['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
       options[:headers]['User-Agent'] = @user_agent if @user_agent
+      options[:headers].update(@headers)
 
       if http_method == :get
         options[:query] = @params

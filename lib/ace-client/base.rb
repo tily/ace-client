@@ -61,6 +61,7 @@ module AceClient
       @version = options[:version]
       @path = options[:path] || ENV['ACE_PATH'] || '/'
       @user_agent = options[:user_agent]
+      @headers = options[:headers] || {}
       set_http_proxy
     end
 
