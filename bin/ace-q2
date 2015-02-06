@@ -18,7 +18,7 @@ def main(args)
   action = args.shift
   params = {}
   args.each do |arg|
-    key, value = arg.split('=')
+    key, value = arg.split('=', 2)
     if value.nil?
       abort 'Error: please specify params like Key=Value'
     end
