@@ -104,7 +104,8 @@ module AceClient
     end
 
     def string_to_sign
-      host = @host_with_port ? @endpoint : @endpoint.gsub(/\:\d+$/, '')
+      host = @host ? @host : @endpoint 
+      host = @host_with_port ? host : host.gsub(/\:\d+$/, '')
       [@http_method.to_s.upcase, host, @path, canonical_query_string].join("\n")
     end
 
