@@ -16,3 +16,4 @@ end
 gem "nokogiri"
 gem "httparty", "0.10.0"
 gem "thor"
+gem "builder"
