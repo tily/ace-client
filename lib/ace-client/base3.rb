@@ -25,7 +25,7 @@ module AceClient
     end
 
     def create_signature
-      digest = OpenSSL::Digest::Digest.new(@signature_method.downcase.gsub(/hmac/, ''))
+      digest = OpenSSL::Digest.new(@signature_method.downcase.gsub(/hmac/, ''))
       Base64.encode64(OpenSSL::HMAC.digest(digest, secret_access_key, string_to_sign)).strip
     end
 
