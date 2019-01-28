@@ -4,7 +4,6 @@ require 'uri'
 module AceClient
   class Base
     include HTTParty
-    ssl_version :TLSv1
 
     attr_accessor :access_key_id
     attr_accessor :secret_access_key
@@ -58,7 +57,7 @@ module AceClient
           self.class.debug_output($stderr)
         end
       end
-      self.class.format (options[:response_format] || ENV['ACE_RESPONSE_FORMAT'] || 'xml').to_sym
+      self.class.format (options[:response_format] || ENV['ACE_RESPONSE_FORMAT'] || self.class.format).to_sym
       @version = options[:version]
       @path = options[:path] || ENV['ACE_PATH'] || '/'
       @user_agent = options[:user_agent]
