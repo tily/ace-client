@@ -217,6 +217,18 @@ Environment variable ACE_ENDPOINT, ACE_ACCESS_KEY, ACE_SECRET_ACCESS_KEY should 
         </ResponseMetadata>
     </CreateQueueResponse>
 
+## How to develop with docker
+
+```
+## Define your environment variables
+$ vi .env
+
+
+## Execute command-line tool with docker
+$ docker-compose run --rm app ruby bin/ace-q2 
+Usage: ace-q2 DescribeSomethings Key1=Value1 Key2=Value2 ...
+```
+
 ## TODO
 
 * query + sig4 support
