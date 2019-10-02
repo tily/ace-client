@@ -239,4 +239,11 @@ Usage: ace-q2 DescribeSomethings Key1=Value1 Key2=Value2 ...
 * rewrite query and header before/after genrating signature (maybe hook-like interface)
 * environment variable suppoort (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, HTTP_PROXY)
 
+## How to build & publish tily/ace-q2 docker image
+
+```
+$ docker build -t tily/ace-q2:0.0.23 -f Dockerfile.ace-q2 .
+$ docker push tily/ace-q2:0.0.23
+```
+
 ## Copyright
