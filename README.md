@@ -243,7 +243,9 @@ Usage: ace-q2 DescribeSomethings Key1=Value1 Key2=Value2 ...
 
 ```
 $ docker build -t tily/ace-q2:0.0.23 -f Dockerfile.ace-q2 .
+$ docker tag tily/ace-q2:0.0.23 tily-ace-q2:latest
 $ docker push tily/ace-q2:0.0.23
+$ docker push tily/ace-q2:latest
 ```
 
 ## Copyright
