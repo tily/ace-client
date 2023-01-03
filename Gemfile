@@ -14,6 +14,6 @@ group :development do
 end
 
 gem "nokogiri"
-gem "httparty", "0.10.0"
+gem "httparty", "0.21.0"
 gem "thor"
 gem "builder"
